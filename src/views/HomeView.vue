@@ -1,9 +1,12 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import mainWrap from '../components/mainWrap.vue'
+import headTop from '../components/headTop.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <headTop></headTop>
+    <mainWrap></mainWrap>
+    <el-backtop :right="30" :bottom="100" class="green"/>
+  </div>
 </template>
