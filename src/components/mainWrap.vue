@@ -12,21 +12,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -40,21 +40,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -68,21 +68,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -96,21 +96,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -124,21 +124,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -152,21 +152,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -180,21 +180,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -208,21 +208,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -236,21 +236,21 @@ const tableData = ref([
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "runfengw",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
     type: "kv260",
     ip: "10.176.179.103",
     user: "",
-    status: "Ture",
+    status: "True",
     remark: "备注",
   },
   {
@@ -296,16 +296,12 @@ const status = [
 const searchhandle = (val) => {
   console.log(val);
 };
-const showDialog = () => {
-  dialogFormVisible.value = true;
-  // tableData.value=[{
-  //   type: "kv260",
-  //   ip: "10.176.179.103",
-  //   user: "runfengw",
-  //   status: "Ture",
-  //   remark: "备注",
-  // },]
+const sysdialogRef = ref(null)
+const showDialog = data => {
+  console.log(data, 'main')
+  sysdialogRef.value.init(data)
 };
+
 </script>
 
 <template>
@@ -325,12 +321,12 @@ const showDialog = () => {
           <el-col :span="5" style="padding-right: 10px"><el-input v-model="searchIp" :suffix-icon="Search"
               placeholder="Enter ip to search" clearable @input="searchhandle" /></el-col>
           <el-col :span="2" style="text-align: right">
-            <el-button type="primary" @click="showDialog">ADD</el-button>
+            <el-button type="primary" @click="showDialog()">ADD</el-button>
           </el-col>
         </el-row>
       </div>
-      <systable v-model:tableData="tableData"></systable>
-      <sysdialog v-model:dialog-form-visible="dialogFormVisible" v-model:types="types"></sysdialog>
+      <systable v-model:tableData="tableData" @showDialog="showDialog"></systable>
+      <sysdialog ref="sysdialogRef" v-model:dialog-form-visible="dialogFormVisible" v-model:types="types"></sysdialog>
     </div>
   </el-scrollbar>
 </template>
