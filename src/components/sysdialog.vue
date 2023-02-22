@@ -11,8 +11,8 @@
         <el-input v-model="form.ip" autocomplete="off" placeholder="Please input" />
       </el-form-item>
       <el-form-item label="" :label-width="formLabelWidth">
-        <el-switch :model-value="form.status === 'False'" class="mb-2" style="--el-switch-on-color: #13ce66" active-text="occupy"
-          inactive-text="vacant" />
+        <el-switch :model-value="form.status === 'False'" class="mb-2" style="--el-switch-on-color: #13ce66"
+          active-text="occupy" inactive-text="vacant" />
       </el-form-item>
       <el-form-item label="Remark: ">
         <el-input v-model="form.remark" type="textarea" placeholder="Please input" />
@@ -48,13 +48,12 @@ const dialogFormVisible = ref(false)
 const form = ref({})
 const onCloseHandle = val => {
   dialogFormVisible.value = false
+  form.value = {}
   // emit('update:dialogFormVisible', false)
 };
 const init = data => {
-  console.log(data, 'dialog')
   if (data) {
     form.value = JSON.parse(JSON.stringify(data))
-    console.log(form.value.status)
   }
   dialogFormVisible.value = true
   // emit('update:dialogFormVisible', true)
