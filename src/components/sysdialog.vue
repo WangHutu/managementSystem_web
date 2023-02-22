@@ -1,44 +1,68 @@
 <template>
-  <el-dialog v-model="dialogFormVisibleUpdate" title="Shipping address">
-<!--    <el-form :model="form">-->
-<!--      <el-form-item label="Promotion name" :label-width="formLabelWidth">-->
-<!--        <el-input v-model="form.name" autocomplete="off" />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="Zones" :label-width="formLabelWidth">-->
-<!--        <el-select v-model="form.region" placeholder="Please select a zone">-->
-<!--          <el-option label="Zone No.1" value="shanghai" />-->
-<!--          <el-option label="Zone No.2" value="beijing" />-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
-<!--    </el-form>-->
-<!--    <template #footer>-->
-<!--      <span class="dialog-footer">-->
-<!--        <el-button @click="dialogFormVisible = false">Cancel</el-button>-->
-<!--        <el-button type="primary" @click="onClose"> Confirm </el-button>-->
-<!--      </span>-->
-<!--    </template>-->
+  <el-dialog :model-value="dialogFormVisible" title="Shipping address" :show-close="false" width="600px">
+    <el-form :model="form">
+      <el-form-item label="Type: " :label-width="formLabelWidth">
+        <el-select v-model="form.type" placeholder="Please select a type">
+          <el-option v-for="item in types" :label="item.label" :value="item.value" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Ip: " :label-width="formLabelWidth" >
+        <el-input v-model="form.ip" autocomplete="off" placeholder="Please input"/>
+      </el-form-item>
+      <el-form-item label="" :label-width="formLabelWidth">
+        <el-switch v-model="form.status" class="mb-2" style="--el-switch-on-color: #13ce66"
+          active-text="vacant" inactive-text="occupy" />
+      </el-form-item>
+      <el-form-item label="Remark: ">
+      <el-input v-model="form.remark" type="textarea" placeholder="Please input"/>
+    </el-form-item>
+
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="onCloseHandle">Cancel</el-button>
+        <el-button type="primary" @click="onCloseHandle"> Confirm </el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 
 <script setup>
-import {computed, reactive, toRef} from "vue";
-
+import { ref } from "vue";
+const formLabelWidth = "60px";
 const props = defineProps({
   dialogFormVisible: {
     type: Boolean,
     required: true,
     default: false,
   },
+  types: {
+    type: Array,
+    required: true,
+    default: [],
+  },
 });
-console.log(props.dialogFormVisible);
-
-const formLabelWidth = "140px";
-const emits = defineEmits(["update:dialogFormVisible"]);
-const dialogFormVisibleUpdate = computed(() => props.dialogFormVisible)
-console.log(dialogFormVisibleUpdate);
-
-const onClose = () => {
+const emit = defineEmits(['update:dialogFormVisible'])
+const form = ref({})
+const onCloseHandle = val => {
+  emit('update:dialogFormVisible', false)
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-button--text {
+  margin-right: 15px;
+}
+
+.el-select {
+  width: 100%;
+}
+
+.el-input {
+  width: 100%;
+}
+
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+</style>
