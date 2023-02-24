@@ -2,38 +2,39 @@
     <div class="login_wrap">
         <div class="form_wrap">
             <p class="form_head">
-                Login
+                {{ tabState }}
             </p>
-            <el-form ref="ruleFormRef" status-icon :rules="rules" label-width="70px" class="ruleForm loginForm">
-                <el-form-item label="User">
-                    <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+            <el-form v-if="tabState === 'Login'" ref="ruleFormLoginRef" :rules="rulesLogin" :model="ruleForm" status-icon label-width="70px" class="ruleForm loginForm">
+                <el-form-item label="User:" prop="user">
+                    <el-input v-model="ruleForm.user" type="password" autocomplete="off" />
                 </el-form-item>
-                <el-form-item label="Password">
-                    <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+                <el-form-item label="Password:" prop="password">
+                    <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm(ruleFormRef)">Submit</el-button>
+                    <el-button type="primary" @click="submitForm(ruleFormLoginRef)">{{ tabState }}</el-button>
                 </el-form-item>
             </el-form>
 
-            <el-form ref="ruleFormRef" status-icon :rules="rules" label-width="70px" class="ruleForm RegisterForm">
-                <el-form-item label="User">
-                    <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+            <el-form v-else ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px" class="ruleForm RegisterForm">
+                <el-form-item label="User: " prop="user">
+                    <el-input v-model="ruleForm.user" type="password" autocomplete="off" />
                 </el-form-item>
-                <el-form-item label="Password">
-                    <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+                <el-form-item label="Password: " prop="password">
+                    <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
                 </el-form-item>
-                <el-form-item label="Agin">
-                    <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+                <el-form-item label="Agin: " prop="passwordAgin">
+                    <el-input v-model="ruleForm.passwordAgin" type="password" autocomplete="off" />
                 </el-form-item>
-                <el-form-item class="qwe">
-                    <el-button type="primary" @click="submitForm(ruleFormRef)">Submit</el-button>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm(ruleFormRef)">{{ tabState }}</el-button>
                 </el-form-item>
             </el-form>
 
             <div class="form_footer">
-                <el-link type="primary" >login</el-link>
-                <el-link type="primary" >register</el-link>
+                <el-link type="primary" @click="changeTab('Login')" style="margin-right: 0px">Login</el-link>
+                <el-divider direction="vertical" />
+                <el-link type="primary" @click="changeTab('Register')"> Register</el-link>
             </div>
         </div>
     </div>
@@ -43,39 +44,25 @@
 import { reactive, ref } from 'vue'
 
 const ruleFormRef = ref()
+const ruleFormLoginRef = ref()
 
-const checkAge = (rule, value, callback) => {
-    if (!value) {
-        return callback(new Error('Please input the age'))
-    }
-    setTimeout(() => {
-        if (!Number.isInteger(value)) {
-            callback(new Error('Please input digits'))
-        } else {
-            if (value < 18) {
-                callback(new Error('Age must be greater than 18'))
-            } else {
-                callback()
-            }
-        }
-    }, 1000)
-}
+const tabState = ref('Login')
 
 const validatePass = (rule, value, callback) => {
-    if (value === '') {
+    if (ruleForm.password === '') {
         callback(new Error('Please input the password'))
     } else {
-        if (ruleForm.checkPass !== '') {
+        if (ruleForm.passwordAgin !== '') {
             if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
+            ruleFormRef.value.validateField('passwordAgin', () => null)
         }
         callback()
     }
 }
 const validatePass2 = (rule, value, callback) => {
-    if (value === '') {
+    if (ruleForm.passwordAgin === '') {
         callback(new Error('Please input the password again'))
-    } else if (value !== ruleForm.pass) {
+    } else if (ruleForm.passwordAgin !== ruleForm.password) {
         callback(new Error("Two inputs don't match!"))
     } else {
         callback()
@@ -83,17 +70,30 @@ const validatePass2 = (rule, value, callback) => {
 }
 
 const ruleForm = reactive({
-    pass: '',
-    checkPass: '',
-    age: '',
+    user:'',
+    password: '',
+    passwordAgin: ''
+})
+
+const rulesLogin = reactive({
+    user: [{  required: true, message: 'Please input Activity user', trigger: 'blur' }],
+    password: [{ required: true, validator: validatePass, trigger: 'blur' }]
 })
 
 const rules = reactive({
-    pass: [{ validator: validatePass, trigger: 'blur' }],
-    checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-    age: [{ validator: checkAge, trigger: 'blur' }],
+    user: [{  required: true, message: 'Please input Activity user', trigger: 'blur' }],
+    password: [{ required: true, validator: validatePass, trigger: 'blur' }],
+    passwordAgin: [{ required: true, validator: validatePass2, trigger: 'blur' }]
 })
 
+// change tab
+const changeTab = (state) => {
+    tabState.value = state
+    resetForm(ruleFormRef.value)
+    resetForm(ruleFormLoginRef.value)
+}
+
+// submit
 const submitForm = (formEl) => {
     if (!formEl) return
     formEl.validate((valid) => {
@@ -106,6 +106,7 @@ const submitForm = (formEl) => {
     })
 }
 
+// clean form-data
 const resetForm = (formEl) => {
     if (!formEl) return
     formEl.resetFields()
@@ -141,6 +142,9 @@ const resetForm = (formEl) => {
     padding: 0 25px;
     margin-bottom: 20px;
     border-bottom: 1px solid #e5e5e5;
+    font-size: 25px;
+    font-weight: bold;
+    color: #409eff;
 }
 
 .ruleForm {
