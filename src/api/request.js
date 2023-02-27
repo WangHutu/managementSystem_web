@@ -25,13 +25,14 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
     (res) => {
+        console.log(res, 'res')
         if (typeof res.data !== 'object') {
             ElMessage.error('服务端异常！')
             return Promise.reject(res)
         }
-        if (res.data.resultCode != 200) {
+        if (res.data.code != 200) {
             if (res.data.message) ElMessage.error(res.data.message)
-            if (res.data.resultCode == 416) {
+            if (res.data.code == 416) {
                 router.push({ path: '/login' })
             }
             if (res.data.data && window.location.hash == '#/login') {
@@ -40,6 +41,7 @@ request.interceptors.response.use(
             }
             return Promise.reject(res.data)
         }
+        ElMessage.success(res.data.message)
         return res.data
     },
     (error) => {

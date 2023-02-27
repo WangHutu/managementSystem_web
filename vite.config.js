@@ -8,7 +8,8 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      'api': fileURLToPath(new URL('./src/api', import.meta.url))
     }
   },
   server: {
@@ -19,7 +20,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "", // 后台接口
+        target: "http://127.0.0.1:5000", // 后台接口
         changeOrigin: true,
         secure: false, // 如果是https接口，需要配置这个参数
         ws: false, //websocket支持

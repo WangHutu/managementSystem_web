@@ -4,9 +4,10 @@
             <p class="form_head">
                 {{ tabState }}
             </p>
-            <el-form v-if="tabState === 'Login'" ref="ruleFormLoginRef" :rules="rulesLogin" :model="ruleForm" status-icon label-width="70px" class="ruleForm loginForm">
+            <el-form v-if="tabState === 'Login'" ref="ruleFormLoginRef" :rules="rulesLogin" :model="ruleForm" status-icon
+                label-width="70px" class="ruleForm loginForm">
                 <el-form-item label="User:" prop="user">
-                    <el-input v-model="ruleForm.user" type="password" autocomplete="off" />
+                    <el-input v-model="ruleForm.user" autocomplete="off" />
                 </el-form-item>
                 <el-form-item label="Password:" prop="password">
                     <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
@@ -16,9 +17,10 @@
                 </el-form-item>
             </el-form>
 
-            <el-form v-else ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px" class="ruleForm RegisterForm">
+            <el-form v-else ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px"
+                class="ruleForm RegisterForm">
                 <el-form-item label="User: " prop="user">
-                    <el-input v-model="ruleForm.user" type="password" autocomplete="off" />
+                    <el-input v-model="ruleForm.user" autocomplete="off" />
                 </el-form-item>
                 <el-form-item label="Password: " prop="password">
                     <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
@@ -42,6 +44,10 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { userLoginApi } from 'api/login'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const ruleFormRef = ref()
 const ruleFormLoginRef = ref()
@@ -70,18 +76,18 @@ const validatePass2 = (rule, value, callback) => {
 }
 
 const ruleForm = reactive({
-    user:'',
+    user: '',
     password: '',
     passwordAgin: ''
 })
 
 const rulesLogin = reactive({
-    user: [{  required: true, message: 'Please input Activity user', trigger: 'blur' }],
+    user: [{ required: true, message: 'Please input Activity user', trigger: 'blur' }],
     password: [{ required: true, validator: validatePass, trigger: 'blur' }]
 })
 
 const rules = reactive({
-    user: [{  required: true, message: 'Please input Activity user', trigger: 'blur' }],
+    user: [{ required: true, message: 'Please input Activity user', trigger: 'blur' }],
     password: [{ required: true, validator: validatePass, trigger: 'blur' }],
     passwordAgin: [{ required: true, validator: validatePass2, trigger: 'blur' }]
 })
@@ -99,6 +105,13 @@ const submitForm = (formEl) => {
     formEl.validate((valid) => {
         if (valid) {
             console.log('submit!')
+            if (tabState.value === 'Login') {
+                userLoginApi(ruleForm).then(res => {
+                    if(res.code == '200') {
+                        router.push('/')
+                    }
+                })
+            }
         } else {
             console.log('error submit!')
             return false
