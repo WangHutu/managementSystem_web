@@ -27,6 +27,11 @@ const routes = [
   // }
 ]
 
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes
+})
+
 // 路由拦截
 router.beforeEach((to, from, next) => {
   if (to.path == '/login') {
@@ -36,17 +41,12 @@ router.beforeEach((to, from, next) => {
     const token = getLocal('Authorization');
     // token 不存在
     if (token === null || token === '') {
-      ElMessage.error('您还没有登录，请先登录');
+      ElMessage.error('Token不存在，请登录');
       next('/login');
     } else {
       next();
     }
   }
-})
-
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes
 })
 
 export default router

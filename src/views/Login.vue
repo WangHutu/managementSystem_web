@@ -44,8 +44,9 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { userLoginApi } from 'api/login'
+import { userLoginApi, userRegisterApi } from 'api/user'
 import { useRouter } from 'vue-router'
+import { setLocal } from '@/common/utils'
 
 const router = useRouter()
 
@@ -107,8 +108,17 @@ const submitForm = (formEl) => {
             console.log('submit!')
             if (tabState.value === 'Login') {
                 userLoginApi(ruleForm).then(res => {
-                    if(res.code == '200') {
+                    if (res.code == '200') {
+                        if (res.data.info) {
+                            setLocal('info', res.data.info)
+                        }
                         router.push('/')
+                    }
+                })
+            } else {
+                userRegisterApi(ruleForm).then(res => {
+                    if (res.code == '200') {
+                        changeTab('Login')
                     }
                 })
             }

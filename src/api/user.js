@@ -7,3 +7,11 @@ export function userLoginApi(loginform) {
         data: loginform
     })
 }
+
+export function userRegisterApi(loginform) {
+    return request({
+        url: '/register',
+        method: 'post',
+        data: loginform
+    })
+}

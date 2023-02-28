@@ -7,7 +7,6 @@ import {setLocal} from '../common/utils'
 const request = axios.create({
     baseURL: '/api', // url = base url + request url
     withCredentials: true,
-
     timeout: 8000 // 8s超时
 })
 
@@ -17,7 +16,7 @@ request.interceptors.request.use(
         return response // 请求成功则返回response
     },
     (error) => { // 请求失败则显示错误状态
-        message.error(error.message)
+        ElMessage.error(error.message)
         return Promise.reject(error)
     }
 )
@@ -32,23 +31,23 @@ request.interceptors.response.use(
         }
         if (res.data.code != 200) {
             if (res.data.message) ElMessage.error(res.data.message)
-            if (res.data.code == 416) {
-                router.push({ path: '/login' })
-            }
-            if (res.data.data && window.location.hash == '#/login') {
-                setLocal('token', res.data.data)
-                axios.defaults.headers['token'] = res.data.data
-            }
+            // if (res.data.code == 416) {
+            //     router.push({ path: '/login' })
+            // }
             return Promise.reject(res.data)
+        }
+        if (res.data.data && res.data.data.token){
+            setLocal('Authorization', res.data.data.token)
         }
         ElMessage.success(res.data.message)
         return res.data
     },
     (error) => {
-        message.error(error.message)
+        ElMessage.error(error.message)
         return Promise.reject(error)
     }
 )
+
 
 // 导出request
 export default request 
