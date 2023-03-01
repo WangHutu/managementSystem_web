@@ -1,14 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import { ElMessage } from 'element-plus'
 import { getLocal } from '../common/utils'
+import Layout from '@/components/layout/index.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    // component: HomeView
+    component: Layout,
+    redirect: '/home',
+    children: [{
+      path: 'home',
+      name: 'home',
+      component: () => import('@/views/HomeView/HomeView.vue'),
+    }]
   },
+  {
+    path: '/type',
+    component: Layout,
+    children: [{
+      path: 'Type',
+      name: 'type',
+      component: () => import('@/views/Type.vue'),
+    }]
+  },
+  
   {
     path: '/login',
     name: 'login',
@@ -35,6 +52,7 @@ const router = createRouter({
 // 路由拦截
 router.beforeEach((to, from, next) => {
   if (to.path == '/login') {
+    localStorage.clear()
     next();
   } else {
     // 获取 token

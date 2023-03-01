@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-import { Check, CloseBold } from '@element-plus/icons-vue'
 defineProps({
     tableData: {
         type: Array,

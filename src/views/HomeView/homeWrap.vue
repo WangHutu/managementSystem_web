@@ -1,7 +1,7 @@
 <template>
   <el-scrollbar>
-    <div class="main">
-      <div class="main_head">
+    <div class="home">
+      <div class="home_head">
         <el-row>
           <el-col :span="12" style="padding-right: 20px">
             <el-select v-model="selectType" filterable multiple placeholder="Select Type" style="width: 100%"
@@ -350,14 +350,7 @@ const change = (val, event) => {
 </script>
 
 <style scoped>
-.main {
-  /* height: 2000px; */
-  min-width: 1024px;
-  width: calc(100vw - 300px);
-  margin: 70px auto 55px;
-}
-
-.main .main_head {
+.home .home_head {
   height: 50px;
   line-height: 50px;
   margin-bottom: 10px;
