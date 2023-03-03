@@ -1,17 +1,17 @@
 import request from './request'
 
-export function userLoginApi(loginform) {
+export function userLoginApi(data) {
     return request({
         url: '/login',
         method: 'post',
-        data: loginform
+        data
     })
 }
 
-export function userRegisterApi(loginform) {
+export function userRegisterApi(data) {
     return request({
         url: '/register',
         method: 'post',
-        data: loginform
+        data
     })
 }

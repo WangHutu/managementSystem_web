@@ -1,30 +1,45 @@
-// 引入axios封装
+// import axios
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import {setLocal} from '../common/utils'
+import { setLocal, getLocal } from '../common/utils'
+import { useRouter } from 'vue-router'
 
-// 创建axios实例
+const router = useRouter()
+
+// create axios
 const request = axios.create({
-    baseURL: '/api', // url = base url + request url
+    baseURL: '/api',
     withCredentials: true,
     timeout: 8000 // 8s超时
 })
 
-// 请求拦截器 一般写法模式
+const whiteUrls = ['/login']
+
+// request interceptor
 request.interceptors.request.use(
-    (response) => {
-        return response // 请求成功则返回response
+    (config) => {
+        console.log(config, 'config')
+        config.data = JSON.stringify(config.data);
+        config.headers['Content-Type'] = 'application/json;charset=utf-8'
+        let token = getLocal('Authorization')
+        if (!whiteUrls.includes(config.url)) {
+            if (!token) {
+                router.push('/login')
+            } else {
+                config.headers["Authorization"] = token
+            }
+        }
+        return config
     },
-    (error) => { // 请求失败则显示错误状态
+    (error) => {
         ElMessage.error(error.message)
         return Promise.reject(error)
     }
 )
 
-// 响应拦截器
+// response interceptor
 request.interceptors.response.use(
     (res) => {
-        console.log(res, 'res')
         if (typeof res.data !== 'object') {
             ElMessage.error('服务端异常！')
             return Promise.reject(res)
@@ -36,10 +51,7 @@ request.interceptors.response.use(
             // }
             return Promise.reject(res.data)
         }
-        if (res.data.data && res.data.data.token){
-            setLocal('Authorization', res.data.data.token)
-        }
-        ElMessage.success(res.data.message)
+        if (res.data.message) ElMessage.success(res.data.message)
         return res.data
     },
     (error) => {
@@ -49,5 +61,5 @@ request.interceptors.response.use(
 )
 
 
-// 导出request
+// export request
 export default request 

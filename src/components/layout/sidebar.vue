@@ -12,12 +12,12 @@
             </el-icon>
             <template #title>类型</template>
         </el-menu-item>
-        <el-menu-item index="/user">
+        <!-- <el-menu-item index="/user">
             <el-icon>
                 <User />
             </el-icon>
             <template #title>用户</template>
-        </el-menu-item>
+        </el-menu-item> -->
     </el-menu>
 </template>
    

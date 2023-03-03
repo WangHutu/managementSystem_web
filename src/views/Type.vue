@@ -4,7 +4,7 @@
             <div class="home_head">
                 <el-row justify="space-between">
                     <el-col :span="10" style="padding-right: 20px">
-                        <el-input :suffix-icon="Search" :model-value="selectType" placeholder="Enter Type to search"
+                        <el-input :suffix-icon="Search" :model-value="selectType.typeName" placeholder="Enter Type to search"
                             clearable @input="change('type', $event)" @keyup.enter="searchHandle" />
                     </el-col>
                     <el-col :span="2" style="text-align: right">
@@ -21,37 +21,40 @@
 </template>
   
 <script setup>
-import { ref } from "vue";
-const selectType = ref([]);
-const tableData = ref([
-    {
-        type: "kv260",
-        status: "True",
-        remark: "备注",
-    },
-    {
-        type: "vck190",
-        status: "True",
-        remark: "备注",
-    },
-    {
-        type: "zcu104",
-        status: "True",
-        remark: "备注",
-    }
-]);
+import { ref, onMounted } from "vue";
+import { getType } from "api/board"
+const selectType = ref({
+    typeName: ''
+});
+const tableData = ref([]);
 const sysdialogRef = ref(null)
 const showDialog = data => {
     sysdialogRef.value.init(data)
 };
 const searchHandle = () => {
-    console.log(selectType.value)
+    getTypeList(selectType.value)
 };
 const change = (val, event) => {
     if (val === 'type') {
-        selectType.value = event
+        selectType.value.typeName = event
     }
 }
+
+const getTypeList = (data) => {
+    console.log(data, 'data')
+    getType(data).then(res => {
+        if (res.code == '200') {
+            if (res.data) {
+                tableData.value = res.data
+            }
+        }
+    })
+}
+
+onMounted(() => {
+    getTypeList(selectType.value)
+})
+
 
 </script>
   

@@ -107,10 +107,12 @@ const submitForm = (formEl) => {
         if (valid) {
             console.log('submit!')
             if (tabState.value === 'Login') {
+                console.log(ruleForm)
                 userLoginApi(ruleForm).then(res => {
                     if (res.code == '200') {
                         if (res.data.info) {
                             setLocal('info', res.data.info)
+                            setLocal('Authorization', res.data.token)
                         }
                         router.push('/')
                     }
